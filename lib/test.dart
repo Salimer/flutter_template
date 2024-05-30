@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/assets/gen/assets.gen.dart';
+import 'package:flutter_template/core/extensions/context_extension.dart';
 
 class Test extends StatelessWidget {
   const Test({super.key});
@@ -11,7 +11,7 @@ class Test extends StatelessWidget {
       appBar: AppBar(
         leading: Assets.images.png.screenShot.image()
       ),
-      body: SafeArea(child: Text(AppLocalizations.of(context).helloWorld)),
+      body: SafeArea(child: Text(context.locale.helloWorld)),
     );
   }
 }
