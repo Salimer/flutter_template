@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http_multi_server/http_multi_server.dart';
 import 'package:flutter_template/core/config/app_theme.dart';
 import 'package:flutter_template/test.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -9,13 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      locale: Locale('ar'),
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const Test()
-    );
+        title: 'Flutter Demo',
+        locale: Locale('ar'),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const Test());
   }
 }
