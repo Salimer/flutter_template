@@ -4,6 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 extension ContextExtension<T> on BuildContext {
   Size get screenSize => MediaQuery.sizeOf(this);
 
+  ThemeData get theme => Theme.of(this);
+
   AppLocalizations get locale => AppLocalizations.of(this);
 
   void push(Widget page) {
