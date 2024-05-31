@@ -42,6 +42,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# vs code
+.vscode/
+
 # generated assets
 **/*.gen.dart
 
