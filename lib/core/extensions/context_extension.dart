@@ -6,6 +6,8 @@ extension ContextExtension<T> on BuildContext {
 
   ThemeData get theme => Theme.of(this);
 
+  ColorScheme get colors => Theme.of(this).colorScheme;
+
   AppLocalizations get locale => AppLocalizations.of(this);
 
   void push(Widget page) {
