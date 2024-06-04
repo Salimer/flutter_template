@@ -59,7 +59,10 @@ dev_dependencies:
   custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10
   flutter_gen_runner: ^5.5.0+1
-  rename: ^3.0.2 # rename setAppName --targets ios,android,macos,windows,linux --value "YourAppName"
+  rename: ^3.0.2
+  # flutter pub global activate rename
+  # export PATH="$PATH":"$HOME/.pub-cache/bin"
+  # rename setAppName --targets ios,android,macos,windows,linux --value "YourAppName"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
