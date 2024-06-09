@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData _baseTheme() {
     final ThemeData theme = ThemeData.light();
-    return theme.copyWith(textTheme: theme.textTheme.apply());
+    return theme.copyWith(
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.all(0),
+          minimumSize: Size.zero,
+        ),
+      ),
+      textTheme: theme.textTheme.apply(),
+    );
   }
 
   static ThemeData get lightTheme => _baseTheme().copyWith(
