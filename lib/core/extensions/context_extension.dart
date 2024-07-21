@@ -17,4 +17,25 @@ extension ContextExtension<T> on BuildContext {
       ),
     );
   }
+
+  void pushReplacement(Widget page) {
+    Navigator.of(this).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => page,
+      ),
+    );
+  }
+
+  void pushAndPopAll(Widget page) {
+    Navigator.of(this).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => page,
+      ),
+      (route) => false,
+    );
+  }
+
+  void pushNamed(String routeName) {
+    Navigator.of(this).pushNamed(routeName);
+  }
 }
