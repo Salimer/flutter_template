@@ -4,6 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 extension ContextExtension<T> on BuildContext {
   Size get screenSize => MediaQuery.sizeOf(this);
 
+  Orientation get screenOrientation => MediaQuery.orientationOf(this);
+
   ThemeData get theme => Theme.of(this);
 
   ColorScheme get colors => Theme.of(this).colorScheme;
