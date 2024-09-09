@@ -63,6 +63,8 @@ dev_dependencies:
   # flutter pub global activate rename
   # export PATH="$PATH":"$HOME/.pub-cache/bin"
   # rename setAppName --targets ios,android,macos,windows,linux --value "YourAppName"
+  # set bundle command: dart run rename setBundleId --value com.salimer.haderdelivery --targets ios,android
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
