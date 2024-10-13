@@ -4,12 +4,6 @@ class AppTheme {
   static ThemeData _baseTheme() {
     final ThemeData theme = ThemeData.light();
     return theme.copyWith(
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
-          minimumSize: Size.zero,
-        ),
-      ),
       textTheme: theme.textTheme.apply(),
     );
   }
