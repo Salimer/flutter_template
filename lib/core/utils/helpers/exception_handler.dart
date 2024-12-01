@@ -1,17 +1,21 @@
 import 'dart:async' show TimeoutException;
 import 'dart:io' show HandshakeException, SocketException;
 
-import '../../extensions/context_extension.dart';
-import '../navigator_key.dart';
-
-String exceptionHandler(Object? e) {
+({String message, String messageAr}) exceptionHandler(Object? e) {
   if (e is SocketException || e is HandshakeException) {
-    // return navigatorKey.currentContext!.locale.noInternet;
-    return "no internet";
+    return (
+      message: "No internet connection",
+      messageAr: "لا يوجد اتصال بالإنترنت"
+    );
   } else if (e is TimeoutException) {
-    // return navigatorKey.currentContext!.locale.slowInternet;
-    return "slow internet";
+    return (
+      message: "Slow internet connection",
+      messageAr: "توجد مشكلة في الاتصال"
+    );
   } else {
-    return '$e';
+    return (
+      message: e.toString(),
+      messageAr: "حدثت مشكلة، يرجى إعادة المحاولة", //e.toString()
+    );
   }
 }

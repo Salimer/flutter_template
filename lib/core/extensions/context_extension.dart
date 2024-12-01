@@ -1,10 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../utils/helpers/exception_handler.dart';
+import '../constants/app_colors.dart';
+import '../constants/layout.dart';
+
 
 extension ContextExtension<T> on BuildContext {
   Size get screenSize => MediaQuery.sizeOf(this);
@@ -17,47 +16,21 @@ extension ContextExtension<T> on BuildContext {
 
   AppLocalizations get locale => AppLocalizations.of(this);
 
-  void push(Widget page) {
-    if (Platform.isIOS) {
-      // Use CupertinoPageRoute for iOS
-      Navigator.of(this).push(
-        CupertinoPageRoute(
-          builder: (context) => page,
-        ),
-      );
-    } else {
-      // Use MaterialPageRoute for Android and others
-      Navigator.of(this).push(
-        MaterialPageRoute(
-          builder: (context) => page,
-        ),
-      );
-    }
+  Object? get routeArguments => ModalRoute.of(this)?.settings.arguments;
+
+  void pushNamed(String routeName, {Object? arguments}) {
+    Navigator.of(this).pushNamed(routeName, arguments: arguments);
   }
 
-  void pushReplacement(Widget page) {
-    Navigator.of(this).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => page,
-      ),
-    );
-  }
-
-  void pushAndPopAll(Widget page) {
-    Navigator.of(this).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => page,
-      ),
-      (route) => false,
-    );
-  }
-
-  void pushNamedAndRemoveUntil(String routeName) {
+  void pushNamedAndRemoveAll(String routeName) {
     Navigator.of(this).pushNamedAndRemoveUntil(routeName, (route) => false);
   }
 
-  void pushNamed(String routeName) {
-    Navigator.of(this).pushNamed(routeName);
+  void pushNamedAndRemoveUntil(String routeName) {
+    Navigator.of(this).pushNamedAndRemoveUntil(
+      routeName,
+      ModalRoute.withName(routeName),
+    );
   }
 
   void pushReplacementNamed(String routeName) {
@@ -83,12 +56,12 @@ extension ContextExtension<T> on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(snackBar);
   }
 
-  void showErrorSnackBar(Object? error) {
+  void showErrorSnackBar(String error) {
     _showSnackBar(
       SnackBar(
         // duration: const Duration(seconds: 1000),
-        content: Text(exceptionHandler(error)),
-        backgroundColor: Colors.red,
+        content: Text(error),
+        backgroundColor: AppColors.danger,
       ),
     );
   }
@@ -97,7 +70,7 @@ extension ContextExtension<T> on BuildContext {
     _showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.success,
       ),
     );
   }
@@ -146,6 +119,34 @@ extension ContextExtension<T> on BuildContext {
     _isLoading = false;
   }
 
+  void showErrorDialog(void Function() providerInvalidated) {
+    showAdaptiveDialog(
+      context: this,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog.adaptive(
+        // title: Text(
+        //   locale.error,
+        //   style: const TextStyle(fontFamily: FontFamily.expoArabic),
+        // ),
+        content: Text(
+          'locale.somethingWentWrong',
+          // style: const TextStyle(fontFamily: FontFamily.expoArabic),
+        ),
+        actions: <Widget>[
+          TextButton(
+              child: Text(
+                'locale.retry',
+                style: const TextStyle(color: Color(0xff007AFF)),
+              ),
+              onPressed: () {
+                providerInvalidated();
+                Navigator.of(context).pop();
+              }),
+        ],
+      ),
+    );
+  }
+
   void showBottomSheet(Widget widget) {
     showModalBottomSheet(
       context: this,
@@ -154,11 +155,71 @@ extension ContextExtension<T> on BuildContext {
     );
   }
 
-  void showSuccessDialog(Widget widget) {
+  void showCustomDialog(Widget widget, {bool isDismissible = true}) {
     showAdaptiveDialog(
       context: this,
+      barrierDismissible: isDismissible,
+      builder: (BuildContext context) => Dialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(Layout.viewsHorizontalPadding),
+          child: widget,
+        ),
+      ),
+    );
+  }
+
+  Future<bool?> showAlertDialog() {
+    return showAdaptiveDialog<bool?>(
+      context: this,
       barrierDismissible: true,
-      builder: (BuildContext context) => widget,
+      builder: (BuildContext context) => AlertDialog.adaptive(
+        title: const SizedBox.shrink(),
+        content: Text(
+          'locale.areYouSure',
+          // style: const TextStyle(fontFamily: FontFamily.expoArabic),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'locale.cancel',
+              style: const TextStyle(color: Color(0xff007AFF)),
+            ),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: Text(
+              'locale.yes',
+              style: const TextStyle(color: Color(0xff007AFF)),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(true); // Return 'true' when signed out
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showMaterialBanner(String message) {
+    ScaffoldMessenger.of(this).showMaterialBanner(
+      MaterialBanner(
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: Text(
+              'this.locale.yes',
+              style: const TextStyle(color: Color(0xff007AFF)),
+            ),
+            onPressed: () {
+              ScaffoldMessenger.of(this).hideCurrentMaterialBanner();
+            },
+          ),
+        ],
+      ),
     );
   }
 }

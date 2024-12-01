@@ -64,6 +64,7 @@ dev_dependencies:
   # export PATH="$PATH":"$HOME/.pub-cache/bin"
   # rename setAppName --targets ios,android,macos,windows,linux --value "YourAppName"
   # set bundle command: dart run rename setBundleId --value com.salimer.haderdelivery --targets ios,android
+  # don't forget to change the name at the top 
 
 
 # For information on the generic Dart part of this file, see the
