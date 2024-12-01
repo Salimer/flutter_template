@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_template/core/models/models.dart';
+import 'package:flutter_template/core/common/models/models.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
